@@ -5,7 +5,7 @@ import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
 import SignInAndSignUpPage from "./pages/sign-in-and-signup/sign-in-and-sign-up.component";
 import Header from "./components/header/header.component";
-import { auth } from "./firebase/firebase.utils";
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
 import "./App.css";
 
@@ -21,9 +21,22 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
-      this.setState({ currentUser: user });
-      console.log(user);
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth); // taken from the return userRef in firebase.utils.js
+        userRef.onSnapshot((snapShot) => {
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data(),
+            },
+          });
+          console.log(this.state);
+        });
+        // the snapShot object data here comes from user that we possibly stored(if its a new authentication)
+        // OR the data related to the user that is already stored in our database
+      }
+      this.setState({ currentUser: userAuth });
     });
   }
 
