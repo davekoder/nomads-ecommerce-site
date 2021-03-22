@@ -1,6 +1,9 @@
 import firebase from "firebase/app";
-import "firebase/firestore";
-import "firebase/auth";
+// we now have access to the firebase utility library because of the import above
+// then we can use the library below
+
+import "firebase/firestore";  // for the database
+import "firebase/auth"; // for the authentication
 
 const config = {
   apiKey: "AIzaSyD0DcAPQNQ_ompjojes2DxQDc4BebN9JLo",

@@ -24,8 +24,8 @@ class App extends React.Component {
         const userRef = await createUserProfileDocument(userAuth); // taken from the return userRef in firebase.utils.js
         userRef.onSnapshot((snapShot) => {
           setCurrentUser({
-              id: snapShot.id,
-              ...snapShot.data(),
+            id: snapShot.id,
+            ...snapShot.data(),
           });
         });
         // the snapShot object data here comes from user that we possibly stored(if its a new authentication)
@@ -46,14 +46,14 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route path='/shop' component={ShopPage} />
-          <Route exact path='/signin' render={() => this.props.currentUser ? (<Redirect to='/'/>) : (<SignInAndSignUpPage/>)} />
+          <Route exact path='/signin' render={() => this.props.currentUser ? (<Redirect to='/' />) : (<SignInAndSignUpPage />)} />
         </Switch>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({user}) => ({
+const mapStateToProps = ({ user }) => ({
   currentUser: user.currentUser
 });
 
