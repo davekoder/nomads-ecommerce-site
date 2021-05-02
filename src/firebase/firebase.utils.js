@@ -13,7 +13,7 @@ const config = {
   storageBucket: "nomads-db.appspot.com",
   messagingSenderId: "425142037946",
   appId: "1:425142037946:web:e6609f695dd2dc19b20183",
-  measurementId: "G-CHSF594659",
+  measurementId: "G-CHSF594659"
 };
 
 // function below is async because its an API request
@@ -68,7 +68,7 @@ export const firestore = firebase.firestore(); // same here
 // This will be the google authentication utility
 const provider = new firebase.auth.GoogleAuthProvider(); // we just store the google auth in provider
 provider.setCustomParameters({ prompt: "select_account" }); // we set a prompt popup to the provider
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const signInWithGoogle = () => firebase.auth().signInWithPopup(provider);
 
 // then we export a const signInWithGoogle that takes in a function that triggers auth.signInWithPopup
 // we then set that to signInWithPopup(provider) because we need the google auth
